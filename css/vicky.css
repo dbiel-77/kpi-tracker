@@ -1,0 +1,139 @@
+/* --- Page width for KPI tab --- */
+#page-vicky { grid-column: 1 / -1; }
+
+/* ===============================
+   KPI (Vicky) – shared tokens
+   =============================== */
+.muted { color: var(--muted); }
+.knum  { font-variant-numeric: tabular-nums; }
+
+/* ===============================
+   KPI (Vicky) – wrapper & cards
+   =============================== */
+.vkpi-host { margin-bottom: 16px; }
+
+.vkpi { display:grid; gap:16px; }
+.vkpi .row { display:grid; gap:16px; grid-template-columns: 1fr; }
+@media (min-width: 920px){ .vkpi .row { grid-template-columns: 2fr 1fr; } }
+
+.kcard{
+  border:1px solid var(--grid);
+  background: color-mix(in oklab, var(--panel) 96%, black 4%);
+  border-radius:14px; padding:16px;
+  box-shadow:0 2px 14px rgba(0,0,0,.15);
+}
+.kcard h3{ margin:0 0 10px 0; font-size:16px; }
+.kcard .big{ font-size:28px; font-weight:700; letter-spacing:.2px; }
+
+/* grid pairs inside main card */
+.grid-2{ display:grid; gap:16px; }
+@media (min-width: 920px){ .grid-2 { grid-template-columns: 1fr 1fr; } }
+
+/* progress bars */
+.progress{ width:100%; height:8px; border-radius:999px;
+  background: color-mix(in oklab, var(--grid) 55%, transparent); overflow:hidden; }
+.progress > b{ display:block; height:100%; width:0%; border-radius:inherit;
+  background: var(--accent); transition: width .4s ease; }
+
+/* tier switch */
+.pill-switch{
+  display:inline-flex; gap:6px; padding:4px;
+  background: color-mix(in oklab, var(--grid) 60%, transparent);
+  border-radius:999px;
+}
+.pill{
+  padding:6px 10px; border-radius:999px; font-size:12px;
+  cursor:pointer; user-select:none; background:transparent;
+  border:1px solid transparent;
+}
+.pill.active{ background:var(--accent-2); border-color:var(--accent-2); color:#0b1220; font-weight:600; }
+
+/* badges */
+.badges{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+.badge{ font-size:12px; border-radius:999px; padding:6px 10px;
+  background: color-mix(in oklab, var(--grid) 50%, transparent); }
+.badge.strong{ background:var(--accent); color:#0b1220; font-weight:700; }
+
+/* small copy */
+.sub{ color:var(--muted); font-size:12px; }
+
+/* ===============================
+   Per-track list – NEW compact pills
+   80% left: title + soft color fill
+   20% right: meta "9 / 13 (71%)" + "need N"
+   =============================== */
+/* --- Per-track 80/20 progress pills --- */
+.track-list { display: grid; gap: 10px; }
+/* Cumulative chart should fill its card */
+.cume-wrap {
+  height: clamp(280px, 42vh, 520px);   /* responsive height */
+  position: relative;
+}
+.cume-wrap canvas {
+  position: absolute;
+  inset: 0;                /* fill container */
+  width: 100% !important;
+  height: 100% !important; /* Chart.js respects this with maintainAspectRatio:false */
+  display: block;
+}
+
+/* 80/20 layout with a subtle card look */
+.track-item{
+  display:grid;
+  grid-template-columns: 4fr 1fr; /* 80% / 20% */
+  align-items:center;
+  gap:12px;
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid var(--grid);
+  background: color-mix(in oklab, var(--panel) 96%, black 4%);
+  position:relative;
+  overflow:hidden;
+}
+
+/* left: progress bar area */
+.track-bar{
+  position:relative;
+  height:42px;
+  border-radius:10px;
+  overflow:hidden;
+  background: color-mix(in oklab, var(--grid) 65%, transparent); /* unfilled */
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--grid) 40%, transparent);
+}
+
+/* the fill grows left->right; color set by --track-color via [data-color] below */
+.track-fill{
+  position:absolute; inset:0 0 0 0;
+  width:0%;
+  background: color-mix(in oklab, var(--track-color) 95%, #000 0%);
+  transition: width .35s ease;
+  border-right: 1px solid color-mix(in oklab, var(--track-color) 65%, #000 0%);
+}
+
+/* track name sits above the fill, padded, and stays readable */
+.track-title{
+  position:relative;
+  z-index:1;
+  height:100%;
+  display:flex; align-items:center;
+  padding:0 12px;
+  font-weight:800;
+  color:#fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,.35);
+}
+
+/* right: compact numbers */
+.track-stats{
+  text-align:right;
+  display:flex; flex-direction:column; gap:4px;
+}
+.track-meta{ font-weight:800; font-variant-numeric: tabular-nums; }
+.track-sub { font-size:12px; color: var(--muted); }
+
+/* Map each track to a color custom property the JS can use via [data-color] */
+.track-item[data-color="0"]{ --track-color:#7aa2f7; } /* Data        */
+.track-item[data-color="1"]{ --track-color:#9ece6a; } /* Digital     */
+.track-item[data-color="2"]{ --track-color:#f7768e; } /* Communication */
+.track-item[data-color="3"]{ --track-color:#e0af68; } /* Research    */
+.track-item[data-color="4"]{ --track-color:#bb9af7; } /* Compliance  */
+.track-item[data-color="5"]{ --track-color:#7dcfff; } /* Outreach    */

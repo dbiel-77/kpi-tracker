@@ -1,0 +1,312 @@
+:root {
+  --bg: #0f1115;
+  --fg: #e7eaf0;
+  --muted: #aab3c5;
+  --accent: #7aa2f7;
+  --accent-2: #9ece6a;
+  --accent-3: #f7768e;
+  --card: #161a22;
+  --grid: #242a36;
+  --chip: #1d2330;
+  --chip-fg: #cfd6e6;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg: #f7f8fb;
+    --fg: #141821;
+    --muted: #556078;
+    --accent: #2952ff;
+    --accent-2: #157f3f;
+    --accent-3: #c22c44;
+    --card: #ffffff;
+    --grid: #e8ebf3;
+    --chip: #eef1f8;
+    --chip-fg: #273049;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font: 14px/1.45 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, "Helvetica Neue", Arial;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: linear-gradient(
+    180deg,
+    var(--bg),
+    color-mix(in oklab, var(--bg) 90%, transparent)
+  );
+  border-bottom: 1px solid var(--grid);
+}
+
+.wrap {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 20px;
+}
+
+h1 {
+  margin: 0 0 6px 0;
+  font-size: 18px;
+}
+
+.sub {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+nav {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.tab {
+  padding: 8px 12px;
+  border: 1px solid var(--grid);
+  border-radius: 10px;
+  background: var(--card);
+  cursor: pointer;
+  user-select: none;
+}
+
+.tab.active {
+  outline: 2px solid var(--accent);
+}
+
+main {
+  padding: 18px 0 40px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 16px;
+}
+
+.panel {
+  background: var(--card);
+  border: 1px solid var(--grid);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.panel h2 {
+  margin: 0 0 10px 0;
+  font-size: 15px;
+}
+
+.filters .row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+label {
+  font-size: 12px;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 4px;
+}
+
+select,
+input[type="file"],
+input[type="text"] {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--grid);
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  padding: 6px 8px;
+  background: var(--chip);
+  color: var(--chip-fg);
+  border-radius: 999px;
+  border: 1px solid var(--grid);
+  font-size: 12px;
+}
+
+.btn {
+  appearance: none;
+  border: 1px solid var(--grid);
+  background: var(--card);
+  color: var(--fg);
+  padding: 8px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.btn.primary {
+  border-color: transparent;
+  background: var(--accent);
+  color: white;
+}
+
+.btn.row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.kpi {
+  background: var(--card);
+  border: 1px solid var(--grid);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.kpi .v {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.kpi .k {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+canvas {
+  width: 100%;
+  height: 300px;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(53, 12px);
+  gap: 3px;
+  align-items: start;
+  overflow: auto;
+  padding-bottom: 4px;
+  border-top: 1px dashed var(--grid);
+}
+
+.day {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  background: #1c2330;
+  border: 1px solid var(--grid);
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 8px;
+}
+
+.legend .sw {
+  width: 12px;
+  height: 12px;
+  border: 1px solid var(--grid);
+  border-radius: 2px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  border-bottom: 1px solid var(--grid);
+  padding: 8px 6px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+th {
+  font-size: 12px;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.right {
+  justify-self: end;
+  text-align: right;
+}
+
+.sticky-actions {
+  position: sticky;
+  bottom: 0;
+  background: var(--card);
+  padding-top: 8px;
+  margin-top: 8px;
+  border-top: 1px solid var(--grid);
+}
+
+.notice {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.divider {
+  height: 1px;
+  background: var(--grid);
+  margin: 10px 0;
+}
+
+.tag {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 999px;
+  border: 1px solid var(--grid);
+  font-size: 11px;
+}
+
+.ok {
+  background: color-mix(in oklab, var(--accent-2) 25%, transparent);
+}
+
+.warn {
+  background: color-mix(in oklab, var(--accent-3) 25%, transparent);
+}
+
+.hidden {
+  display: none !important;
+}
+/* default is two columns: 260px + 1fr (already in your CSS) */
+/* when Vicky is active, flip to single column */
+.grid--full {
+  grid-template-columns: 1fr;
+}

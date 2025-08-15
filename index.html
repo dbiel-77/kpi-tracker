@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Volunteer Analytics Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="./css/styles.css">
+  <link rel="stylesheet" href="./css/vicky.css">
+  <link rel="stylesheet" href="./css/calendar.css">
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Volunteer Analytics Dashboard</h1>
+      <div class="sub">Clean • Filter • Visualize • Export (FY quarters start April)</div>
+      <nav id="tabs">
+        <div class="tab active" data-tab="overview">Overview</div>
+        <div class="tab" data-tab="calendar">Calendar</div>
+        <div class="tab" data-tab="people">People</div>
+        <div class="tab" data-tab="vicky">KPI Tracker</div>
+        <div class="tab" data-tab="about">About</div>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="grid">
+      <aside class="panel filters">
+        <h2>Data</h2>
+        <div class="row">
+          <div>
+            <label>Upload CSV</label>
+            <input type="file" id="file" accept=".csv">
+          </div>
+          <div>
+            <label>Quick load sample</label>
+            <button class="btn" id="loadSample">Load sample</button>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label>Year</label>
+            <select id="year"></select>
+          </div>
+          <div>
+            <label>Month</label>
+            <select id="month"><option value="">All</option></select>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label>Fiscal Quarter</label>
+            <select id="fiscal">
+              <option value="">All</option>
+              <option value="Q1">Q1 (Apr–Jun)</option>
+              <option value="Q2">Q2 (Jul–Sep)</option>
+              <option value="Q3">Q3 (Oct–Dec)</option>
+              <option value="Q4">Q4 (Jan–Mar)</option>
+            </select>
+          </div>
+          <div>
+            <label>Program (track)</label>
+            <select id="program"><option value="">All</option></select>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label>Province</label>
+            <select id="province"><option value="">All</option></select>
+          </div>
+          <div>
+            <label>Age group</label>
+            <select id="age"><option value="">All</option></select>
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label>Current status</label>
+            <select id="status"><option value="">All</option></select>
+          </div>
+          <div>
+            <label>Search name/email</label>
+            <input id="q" type="text" placeholder="Type to filter…">
+          </div>
+        </div>
+        <div class="row">
+          <div>
+            <label>Workstreams</label>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" class="ws" value="Data"> Data</label>
+              <label class="chip"><input type="checkbox" class="ws" value="Digital"> Digital</label>
+              <label class="chip"><input type="checkbox" class="ws" value="Communication"> Communication</label>
+              <label class="chip"><input type="checkbox" class="ws" value="Research"> Research</label>
+              <label class="chip"><input type="checkbox" class="ws" value="Compliance"> Compliance</label>
+              <label class="chip"><input type="checkbox" class="ws" value="Outreach"> Outreach</label>
+            </div>
+          </div>
+          <div>
+            <label>&nbsp;</label>
+            <div class="btn row">
+              <button class="btn" id="reset">Reset filters</button>
+              <button class="btn primary" id="apply">Apply</button>
+            </div>
+          </div>
+        </div>
+        <div class="divider"></div>
+        <h2>Export</h2>
+        <div class="row">
+          <div><button class="btn" id="copyList">Copy names & emails</button></div>
+          <div><button class="btn" id="downloadCsv">Download CSV</button></div>
+        </div>
+        <div class="notice">Exports respect current filters. CSV includes First, Last, Personal Email.</div>
+      </aside>
+
+      <section class="panel" id="page-overview">
+        <h2>Overview</h2>
+        <div class="kpis" id="kpis">
+          <div class="kpi"><div class="v" id="k_total">–</div><div class="k">Total volunteers</div></div>
+          <div class="kpi"><div class="v" id="k_new_mo">–</div><div class="k">New this month</div></div>
+          <div class="kpi"><div class="v" id="k_onb_rate">–</div><div class="k">Onboarding sent rate</div></div>
+          <div class="kpi"><div class="v" id="k_hours">–</div><div class="k">Total hours</div></div>
+        </div>
+        <div class="two" style="margin-top:12px">
+          <div class="panel"><h2>By province</h2><canvas id="c_province"></canvas></div>
+          <div class="panel"><h2>By program</h2><canvas id="c_program"></canvas></div>
+        </div>
+        <div class="two" style="margin-top:12px">
+          <div class="panel"><h2>Monthly new entries</h2><canvas id="c_monthly"></canvas></div>
+          <div class="panel"><h2>Current status mix</h2><canvas id="c_status"></canvas></div>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="page-calendar">
+        <h2>Yearly activity heatmap <span class="muted" id="calYear"></span></h2>
+        <div id="calendar" class="calendar" aria-label="Year heatmap"></div>
+        <div class="legend">
+          <span>Less</span>
+          <span class="sw" style="background:#1c2330"></span>
+          <span class="sw" style="background:#32425d"></span>
+          <span class="sw" style="background:#49608a"></span>
+          <span class="sw" style="background:#5e82ba"></span>
+          <span class="sw" style="background:#7aa2f7"></span>
+          <span>More</span>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="page-people">
+        <h2>People</h2>
+        <div class="notice">Table reflects the current filter set. Click column headers to sort.</div>
+        <div style="overflow:auto;max-height:60vh;border:1px solid var(--grid);border-radius:10px">
+          <table id="table">
+            <thead>
+              <tr>
+                <th data-k="First">First</th>
+                <th data-k="Last">Last</th>
+                <th data-k="Email">Email</th>
+                <th data-k="Program">Program</th>
+                <th data-k="Province">Prov</th>
+                <th data-k="Age group">Age</th>
+                <th data-k="Current status">Current status</th>
+                <th data-k="Date of Entry">Date of Entry</th>
+                <th data-k="Onboarding email sent?">Onboard?</th>
+                <th data-k="Total Hours" class="right">Total hrs</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="sticky-actions">
+          <div class="btn row">
+            <button class="btn" id="copyList2">Copy names & emails</button>
+            <button class="btn" id="downloadCsv2">Download CSV</button>
+          </div>
+        </div>
+      </section>
+      <!-- Vicky / KPI Tracker -->
+      <section class="panel hidden" id="page-vicky">
+        <h2>KPI Tracker</h2>
+
+        <!-- KPI cards + per-track plan (rendered by js/ui/vicky.js) -->
+        <section id="vicky-kpi" class="vkpi-host"></section>
+      </section>
+
+      <section class="panel hidden" id="page-about">
+        <h2>About</h2>
+        <p class="muted">This dashboard cleans in-memory and never saves a new CSV. Fiscal quarters use an April 1 start.</p>
+        <ul>
+          <li>Only the “Current status” column is used for status.</li>
+          <li>Province uses <em>Province</em> or falls back to <em>Provincial code</em>.</li>
+          <li>Export includes First, Last, Personal Email; filters are respected.</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+  <script type="module" src="./js/main.js?v=9"></script>
+</body>
+</html>
