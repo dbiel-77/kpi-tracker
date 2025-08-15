@@ -52,12 +52,12 @@ export const INLINE_SAMPLE = (() => {
   return [header, ...rows].join('\n');
 })();
 
-export async function loadSample() {
-  try {
-    const r = await fetch('./sample.csv', { cache: 'no-store' });
-    if (r.ok) return await r.text();
-  } catch (e) {
-    console.warn('sample.csv fetch failed, using inline sample:', e);
+export async function loadSample({ prefer = 'inline' } = {}) {
+  if (prefer === 'file') {
+    try {
+      const r = await fetch(`./sample.csv?v=${Date.now()}`, { cache: 'no-store' });
+      if (r.ok) return await r.text();
+    } catch {}
   }
   return INLINE_SAMPLE;
 }
