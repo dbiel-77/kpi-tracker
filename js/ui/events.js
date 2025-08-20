@@ -16,6 +16,7 @@ export function getActiveFilters(){
   };
 }
 
+// js/ui/events.js
 export function applyFilters(state){
   const f = getActiveFilters();
   state.filtered = state.rows.filter(r => {
@@ -26,16 +27,24 @@ export function applyFilters(state){
     if (f.province && r.Province !== f.province)           return false;
     if (f.age && r["Age group"] !== f.age)                 return false;
     if (f.status && r["Current status"] !== f.status)      return false;
+
     if (f.q){
       const hay = (r.First + " " + r.Last + " " + (r.Email || "")).toLowerCase();
       if (!hay.includes(f.q)) return false;
     }
-    if (f.workstreams.length){
-      for (const k of f.workstreams){ if (!r[k]) return false; }
+
+    // AND / overlap: must match ALL selected tracks (if any selected)
+    if (f.workstreams.length) {
+      const matchesAny = f.workstreams.some(k => !!r[k]);
+      if (!matchesAny) return false;
     }
+
     return true;
   });
 }
+
+
+
 
 export function bindFilterEvents(state, onChange){
   $$("#apply").addEventListener("click", () => { applyFilters(state); onChange(); });
@@ -99,3 +108,20 @@ export function bindExportButtons(getRows){
     copyToClipboard(out.map(r => `${r.First} ${r.Last} <${r.Email}>`).join("\n"));
   });
 }
+
+// Persist selected tracks in window.state (optional)
+export function getSelectedTracks() {
+  return [...document.querySelectorAll('.ws-grid .ws:checked')].map(x => x.value);
+}
+
+document.getElementById('apply')?.addEventListener('click', () => {
+  window.state = window.state || {};
+  window.state.selectedTracks = getSelectedTracks();
+  if (typeof applyFilters === 'function') applyFilters();
+});
+
+document.getElementById('reset')?.addEventListener('click', () => {
+  document.querySelectorAll('.ws-grid .ws:checked').forEach(cb => cb.checked = false);
+  window.state && (window.state.selectedTracks = []);
+  if (typeof applyFilters === 'function') applyFilters();
+});

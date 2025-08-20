@@ -57,7 +57,7 @@ out = pd.DataFrame({
     "Personal Email Address": df.get("Personal Email Address","").fillna("").astype(str).str.strip(),
     "Program": df.get("Program","").fillna("").astype(str).str.strip().replace("", "UNKNOWN"),
     "Province": df.get("Province","").fillna("").astype(str).str.strip().str.upper().replace("", "OTHER"),
-    "Current status": df.get("Current status","").fillna("").astype(str).str.strip(),
+    "Current status": df.get("Current status (student or working, international or Canadian)","").fillna("").astype(str).str.strip(),
     "Age group": df.get("Age group","").fillna("").astype(str).str.strip(),
     "Date of Entry": df.get("Date of Entry").map(parse_date),
     "Onboarding email sent?": df.get("Onboarding email sent?").map(yes_no),
@@ -76,6 +76,8 @@ out["Date of Entry"] = out["Date of Entry"].dt.strftime("%Y-%m-%d")
 cols = ["First","Last","Personal Email Address","Program","Province","Current status","Age group","Date of Entry","Onboarding email sent?","Total Hours","Data","Digital","Communication","Research","Compliance","Outreach"]
 out = out[cols]
 out = out[(out["First"]!="") | (out["Last"]!="") | (out["Personal Email Address"]!="")]
+out = out[~out["Program"].str.contains(r"\b(CSJ|Microgrants)\b", case=False, na=False)]
+
 
 out.to_csv(OUT_PATH, index=False)
 print(f"Wrote {len(out)} rows to {OUT_PATH}")

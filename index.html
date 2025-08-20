@@ -86,22 +86,48 @@
         <div class="row">
           <div>
             <label>Workstreams</label>
-            <div class="chips">
-              <label class="chip"><input type="checkbox" class="ws" value="Data"> Data</label>
-              <label class="chip"><input type="checkbox" class="ws" value="Digital"> Digital</label>
-              <label class="chip"><input type="checkbox" class="ws" value="Communication"> Communication</label>
-              <label class="chip"><input type="checkbox" class="ws" value="Research"> Research</label>
-              <label class="chip"><input type="checkbox" class="ws" value="Compliance"> Compliance</label>
-              <label class="chip"><input type="checkbox" class="ws" value="Outreach"> Outreach</label>
+
+            <!-- 2×3 tile grid -->
+            <div class="ws-grid" id="wsGrid">
+              <label class="ws-tile">
+                <input type="checkbox" class="ws" value="Data" />
+                <span class="ws-title">Data</span>
+              </label>
+
+              <label class="ws-tile">
+                <input type="checkbox" class="ws" value="Digital" />
+                <span class="ws-title">Digital</span>
+              </label>
+
+              <label class="ws-tile">
+                <input type="checkbox" class="ws" value="Communication" />
+                <span class="ws-title">Communication</span>
+              </label>
+
+              <label class="ws-tile">
+                <input type="checkbox" class="ws" value="Research" />
+                <span class="ws-title">Research</span>
+              </label>
+
+              <label class="ws-tile">
+                <input type="checkbox" class="ws" value="Compliance" />
+                <span class="ws-title">Compliance</span>
+              </label>
+
+              <label class="ws-tile">
+                <input type="checkbox" class="ws" value="Outreach" />
+                <span class="ws-title">Outreach</span>
+              </label>
             </div>
           </div>
+
           <div>
             <label>&nbsp;</label>
-            <div class="btn row">
-              <button class="btn" id="reset">Reset filters</button>
-              <button class="btn primary" id="apply">Apply</button>
-            </div>
           </div>
+        </div>
+        <div class="btn row">
+          <button class="btn" style="padding: 5% auto;" id="reset">Reset filters</button>
+          <button class="btn primary" style="padding: 5% 15%;" id="apply">Apply</button>
         </div>
         <div class="divider"></div>
         <h2>Export</h2>
@@ -193,5 +219,6 @@
     </div>
   </main>
   <script type="module" src="./js/main.js?v=9"></script>
+  <script src="./js/ws-grid.js"></script>
 </body>
 </html>

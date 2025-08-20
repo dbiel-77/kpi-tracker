@@ -67,11 +67,41 @@ export function renderCharts(state){
   });
 
   const byStatus = groupCount(state.filtered, r => r["Current status"]);
+  const statusMap = {
+    "Canadian Permanent Resident": "PR",
+    "International Student or Temporary Residents": "Intl",
+    "Canadian Citizen": "Citizen",
+    "Other": "Other",
+    "Refugee status in Canada": "Refugee"
+  };
+
+  const labels = Object.keys(byStatus).map(l => statusMap[l] || l);
+
   chart(state,"c_status",{
-    type:"pie",
-    data:{ labels:Object.keys(byStatus), datasets:[{ label:"Share", data:Object.values(byStatus)}]},
-    options:{ responsive:true }
+    type:"bar",
+    data:{
+      labels: labels,
+      datasets:[{
+        label:"Volunteers",
+        data:Object.values(byStatus),
+        backgroundColor:["#4a90e2","#e94e77","#f5a623","#7ed321","#50e3c2"]
+      }]
+    },
+    options:{
+      responsive:true,
+      plugins:{ legend:{ display:false }},
+      scales:{
+        x:{
+          grid:{display:false},
+          ticks:{ maxRotation:0, minRotation:0 } // keep text horizontal
+        },
+        y:{ beginAtZero:true }
+      }
+    }
   });
+
+
+
 }
 
 export function renderTable(state){
