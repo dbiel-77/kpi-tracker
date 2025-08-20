@@ -93,7 +93,7 @@ export function renderCharts(state){
       scales:{
         x:{
           grid:{display:false},
-          ticks:{ maxRotation:0, minRotation:0 } // keep text horizontal
+          ticks:{ maxRotation:0, minRotation:0 } 
         },
         y:{ beginAtZero:true }
       }
@@ -169,29 +169,24 @@ export function renderCalendar(state){
 }
 
 export function renderAll(state, deps){
-  // 1) Left column stuff
   renderKPIs(state);
   renderCharts(state);
   renderTable(state);
 
-  // 2) Year label
   const year = Number($$("#year")?.value) || new Date().getFullYear();
   const calYearEl = $$("#calYear");
   if (calYearEl) calYearEl.textContent = year;
 
-  // 3) Always draw the calendar so it’s ready when tab is shown
-  //    Cheap enough to do on every filter change.
   renderCalendar(state, {
     year,
-    cell: 18,                // square size (px). Try 18–22 for larger blocks
-    gutter: 3,               // spacing between squares (px)
-    showWeekdayLabels: true, // left-hand weekday initials
-    showMonthLabels: true,   // top month labels
-    height: 'calc(100vh - 220px)', // fill the page nicely under your header (tweak as needed)
-    startOnMonday: true,     // keep Monday-first layout
+    cell: 18,
+    gutter: 3,
+    showWeekdayLabels: true,
+    showMonthLabels: true,
+    height: 'calc(100vh - 220px)',
+    startOnMonday: true,
   });
 
-  // 4) Vicky page only when visible
   if (!$$("#page-vicky")?.classList.contains("hidden")) {
     deps.renderVicky(state, deps);
   }

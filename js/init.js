@@ -47,7 +47,7 @@ export function initApp(){
         document.querySelectorAll('.ws').forEach(c => c.checked = false);
 
         buildSelectOptions(state);
-        applyFilters(state); // if this doesn’t render, keep renderAll below
+        applyFilters(state);
         renderAll(state, { renderVicky, VICKY_FROM, V_GOALS, V_TRACKS });
         } catch (err) {
         console.error('File read/parse failed:', err);
@@ -56,9 +56,9 @@ export function initApp(){
 
   // Ingest: sample
     $$("#loadSample")?.addEventListener("click", async () => {
-    const txt = await loadSample();             // returns CSV text
-    const parsed = await parseCSVText(txt);     // <— await the Promise
-    ingestToState(parsed);                      // <— update state
+    const txt = await loadSample();
+    const parsed = await parseCSVText(txt);
+    ingestToState(parsed);
 
     buildSelectOptions(state);
     applyFilters(state);

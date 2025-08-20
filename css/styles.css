@@ -3,7 +3,7 @@
   --fg: #e7eaf0;
   --muted: #aab3c5;
   --accent: #7aa2f7;
-  --accent-2: #9ece6a;
+  --accent-2: #99c668;
   --accent-3: #f7768e;
   --card: #161a22;
   --grid: #242a36;
@@ -306,8 +306,7 @@ th {
 .hidden {
   display: none !important;
 }
-/* default is two columns: 260px + 1fr (already in your CSS) */
-/* when Vicky is active, flip to single column */
+
 .grid--full {
   grid-template-columns: 1fr;
 }
@@ -388,28 +387,25 @@ th {
   color: white;
 }
 .ws-tile > input.ws:checked ~ .ws-title::after {
-  /* optional check marker glow */
   content: "";
   position: absolute;
   inset: 0;
-  box-shadow: inset 0 0 0 2px var(--accent-2);
+  box-shadow: inset 0 0 0 2px var(--accent);
   border-radius: 12px;
 }
 
 /* Background fill when selected */
 .ws-tile > input.ws:checked ~ .ws-title,
 .ws-tile > input.ws:checked ~ .ws-title + * {
-  /* no-op to satisfy selectors if DOM reordered; real bg on tile: */
 }
-.ws-tile > input.ws:checked ~ .ws-title { /* keep for specificity */ }
+.ws-tile > input.ws:checked ~ .ws-title { /* keep */ }
 
-.ws-tile > input.ws:checked ~ .ws-title,        /* just keeping selector weight */
+.ws-tile > input.ws:checked ~ .ws-title,
 .ws-tile:has(> input.ws:checked) {
   background: color-mix(in oklab, var(--accent-2) 28%, var(--panel));
   border-color: color-mix(in oklab, var(--accent-2) 60%, var(--grid));
 }
 
-/* UNSELECTED (dark) - default already darker; further dim when something else is selected */
 .ws-grid:has(input.ws:checked) .ws-tile:not(:has(> input.ws:checked)) {
   filter: saturate(.6) brightness(.82);
   opacity: .75;

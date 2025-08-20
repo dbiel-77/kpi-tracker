@@ -12,16 +12,11 @@ export const V_GOALS = {
   // volunteers (aggregate)
   volSoft: 1600,  // Tier 1
   volHard: 2000,  // Tier 2
-
-  // policy: hours expected per volunteer
   hoursPerVol: 120,
-
-  // (optional but nice to be explicit)
   hoursSoft: 1600 * 120, // 192,000
   hoursHard: 2000 * 120, // 240,000
 
   // explicit per-track allocations that sum exactly to 1600 / 2000
-  // tweak these any time — the UI will pick them up automatically
   perTrack: {
     // SOFT total = 275+250+250+275+250+300 = 1600
     // HARD total = 325+325+325+325+350+350 = 2000

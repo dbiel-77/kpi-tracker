@@ -43,9 +43,6 @@ export function applyFilters(state){
   });
 }
 
-
-
-
 export function bindFilterEvents(state, onChange){
   $$("#apply").addEventListener("click", () => { applyFilters(state); onChange(); });
   $$("#reset").addEventListener("click", () => {
@@ -109,7 +106,7 @@ export function bindExportButtons(getRows){
   });
 }
 
-// Persist selected tracks in window.state (optional)
+// Persist selected tracks in window.state
 export function getSelectedTracks() {
   return [...document.querySelectorAll('.ws-grid .ws:checked')].map(x => x.value);
 }
