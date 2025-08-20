@@ -68,8 +68,8 @@ function csvEscape(s) {
 const PROVINCES = ['ON','BC','QC','AB','MB','SK','NS','NB','NL','PE','NT','NU','YT'];
 const PROV_W =   [0.35,0.18,0.17,0.12,0.05,0.04,0.025,0.02,0.015,0.008,0.004,0.004,0.004];
 
-const STATUSES = ['Working','Canadian Citizen','International Student','Temporary Resident','Refugee'];
-const STATUS_W = [0.33,      0.27,               0.20,                  0.15,               0.05];
+const STATUSES = ['Canadian Permanent Resident','Canadian Citizen','Refugee status in Canada','International Student or Temporary Residents'];
+const STATUS_W = [0.30,                          0.35,               0.20,                    0.15];
 
 const AGES = ['15-19','20-24','25-30','None of the above'];
 const AGE_W = [0.20,  0.35,   0.25,    0.20];
@@ -77,8 +77,17 @@ const AGE_W = [0.20,  0.35,   0.25,    0.20];
 const PROGRAMS = ['NYSN','GLOCAL','NYSN, GLOCAL'];
 const PROG_W   = [0.60,  0.25,   0.15];
 
-const FIRSTS = ['Alice','Bob','Carla','Daniel','Esha','Farid','Grace','Hugo','Ivy','Jamal','Kira','Liam','Maya','Noah','Olivia','Pavel','Quinn','Ravi','Sara','Tariq','Uma','Viktor','Wren','Xinyi','Yara','Zane'];
-const LASTS  = ['Ng','Lee','Diaz','Biel','Singh','Chen','Patel','Kowalski','Nowak','Brown','Martin','Roy','Garcia','Hernandez','Lopez','Wilson','Taylor','Anderson','Thomas','Moore','Martin','Lam','Wong','Kim','Park','Nakamura'];
+const FIRSTS = [
+  'Aiden','Bella','Caleb','Dina','Evan','Fiona','Gavin','Hana','Isla','Jonas',
+  'Kara','Leo','Mila','Nolan','Owen','Priya','Qadir','Rosa','Samir','Talia',
+  'Uri','Vera','Wade','Xena','Yusuf','Zara'
+];
+
+const LASTS = [
+  'Adams','Baker','Clark','Davis','Evans','Foster','Green','Hall','Irwin','Jackson',
+  'King','Lewis','Morris','Nelson','Owens','Parker','Quinn','Roberts','Stevens','Turner',
+  'Underwood','Vargas','White','Xu','Young','Zimmer'
+];
 
 function makeEmail(first, last, used) {
   const base = `${first}.${last}`.toLowerCase().replace(/[^a-z0-9.]/g,'');
